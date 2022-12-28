@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  product-service:
+    image: taxes-service:v1
+    container_name: taxes-service
+    build:
+      context: src
+      args:
+        - JAR_FILE=taxesService.jar
+    deploy:
+      resources:
+        limits:
+          memory: "450M"
+        reservations:
+          memory: "150M"
+    environment:
+      - JAVA_OPTS=
+        -Xms256M
+        -Xms256M
+    networks:
+      - mb-micro-service-network
+    volumes:
+      - /opt/firmas/:/opt/firmas/
+
+networks:
+  mb-micro-service-network:
+    driver: mb-micro-service-network
+    external: true
+
