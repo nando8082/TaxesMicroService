@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class TaxesServiceImpl : ITaxesService{
+class TaxesServiceImpl : ITaxesService {
 
     @Autowired
     private val iTaxesDAO: ITaxesDAO? = null

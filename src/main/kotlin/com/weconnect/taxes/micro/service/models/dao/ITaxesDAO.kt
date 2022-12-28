@@ -5,5 +5,4 @@ import org.springframework.data.repository.CrudRepository
 
 interface ITaxesDAO : CrudRepository<Taxes, Long>{
 
-
 }

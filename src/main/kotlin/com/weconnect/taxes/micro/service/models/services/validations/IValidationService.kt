@@ -4,8 +4,8 @@ import org.springframework.validation.BindingResult
 
 interface IValidationService {
 
-    fun validationObject(result: BindingResult) : Any
+    fun validationObject(result: BindingResult): Any
 
-    fun getExceptionMessage(exception: Exception) : Any
+    fun getExceptionMessage(exception: Exception): Any
 
 }

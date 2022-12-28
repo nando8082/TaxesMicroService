@@ -13,10 +13,10 @@ import javax.validation.constraints.NotNull
     description = "ENTIDAD GESTIONADA EN ESTE MICREOSERVICIO, PERMITE  LA CREACION DE LA TABLA CON TODOS LOS ATRIBUTOS QUE TIENEN LOS " +
             "TAXES(IMPUESTOS) EN LA BASE DE DATOS"
 )
-class Taxes : Serializable{
+class Taxes : Serializable {
 
     @Id
-    @TableGenerator(name="taxes_sequential_value", initialValue = 163)
+    @TableGenerator(name = "taxes_sequential_value", initialValue = 163)
     @GeneratedValue(
         strategy = GenerationType.IDENTITY,
         generator = "taxes_sequential_value"

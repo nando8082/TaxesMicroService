@@ -11,7 +11,7 @@ import org.springframework.validation.BindingResult
 import java.util.stream.Collectors
 
 @Service
-class ValidationServiceImpl :IValidationService {
+class ValidationServiceImpl : IValidationService {
 
     override fun validationObject(result: BindingResult): Any {
         val response = HashMap<String, Any>()
