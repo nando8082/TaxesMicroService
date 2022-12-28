@@ -35,8 +35,8 @@ class TaxesController {
 
     @GetMapping("/findAllTaxes")
     @Operation(
-        summary = "LISTAR TODO LOS IMPUESTOS EXISTENTES EN LA BASE DE DATOS",
-        description = "ESTE SERVICIO SE ENCARGA DE LISTAR TODOS LOS IMPUESTOS EXISTENTES" +
+        summary = "LISTAR TODOS LOS TAXES(IMPUESTOS) EXISTENTES EN LA BASE DE DATOS",
+        description = "ESTE SERVICIO SE ENCARGA DE LISTAR TODOS LOS TAXES(IMPUESTOS) EXISTENTES" +
                 "EN LA BASE DE DATOS, SI EL RESULTADO DE LA BUSQUEDA ES CORRECTA RETORNARA" +
                 "UNA LISTA DE IMPUESTOS, CASO CONTRARIO NO LISTARA NADA",
         method = "GET"
@@ -57,7 +57,7 @@ class TaxesController {
             ),
             ApiResponse(
                 responseCode = "404",
-                description = "ESTE MENSAJE SE MOSTRARA EN CASO DE QUE NO EXISTAN DATOS DE IMPUESTOS EN LA BASE DE DATOS"
+                description = "ESTE MENSAJE SE MOSTRARA EN CASO DE QUE NO EXISTAN DATOS DE TAXES(IMPUESTOS) EN LA BASE DE DATOS"
             ),
             ApiResponse(
                 responseCode = "500",
@@ -70,6 +70,54 @@ class TaxesController {
         val response = HashMap<String, Any>()
         return try {
             val taxesList = iTaxesService!!.findAllTaxes()
+            run {
+                response["message"] = StaticValues.MESSAGE_SUCCESS_FIND
+                response["response"] = taxesList
+                ResponseEntity<Map<*, *>>(response, HttpStatus.OK)
+            }
+        } catch (e: DataAccessException) {
+            iValidationService!!.getExceptionMessage(e)
+        }
+    }
+
+    //BUSCAR TAX POR ID
+    @GetMapping("/findTaxByID/{taxID}")
+    @Operation(
+        summary = "MOSTRARA UN IMPUESTOS BUSCADO POR ID EN LA BASE DE DATOS",
+        description = "ESTE SERVICIO SE ENCARGA DE MOSTRAR EL TAX(IMPUESTO) EXISTENTE" +
+                "EN LA BASE DE DATOS, SI EL RESULTADO DE LA BUSQUEDA ES CORRECTA RETORNARA" +
+                "EL TAX(IMPUESTO) PERTENECIENTE AL ID PROPORCIONADO, CASO CONTRARIO NO MOSTRARA NADA",
+        method = "GET"
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "SI EXISTE EL TAX(IMPUESTO) DEVOLVERA EL TAX(IMPUESTO) DE LA BASE DE DATOS",
+                content = [
+                    (Content(
+                        mediaType = "application/json",
+                        schema = Schema(
+                            allOf = arrayOf(Taxes::class)
+                        )
+                    ))
+                ]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "ESTE MENSAJE SE MOSTRARA EN CASO DE QUE NO EXISTA EL ID DEL TAX(IMPUESTO) EN LA" +
+                        "BASE DE DATOS"
+            ),
+            ApiResponse(
+                responseCode = "500",
+                description = "ESTE MENSAJE SE MOSTRARA EN CASO DE QUE EXISTA UN  ERROR INTERNO DEL SERVIDOR"
+            )
+        ]
+    )
+    fun buscarTaxporId(@PathVariable("taxID") taxID: Long): Any {
+        val response = HashMap<String, Any>()
+        return try {
+            val taxesList = iTaxesService!!.findTaxesByTaxesID(taxID)
             run {
                 response["message"] = StaticValues.MESSAGE_SUCCESS_FIND
                 response["response"] = taxesList
@@ -157,7 +205,7 @@ class TaxesController {
         method = "PUT",
         parameters = [Parameter(
             name = "TAX(IMPUESTO)",
-            description = "PARAMETROS QUE POSEEN LOS OBJETOS DE TIPO TAX",
+            description = "PARAMETROS QUE POSEEN LOS OBJETOS DE TIPO TAX(IMPUESTO)",
             required = true
         )]
     )
