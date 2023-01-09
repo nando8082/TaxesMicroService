@@ -114,7 +114,7 @@ class TaxesController {
             )
         ]
     )
-    fun buscarTaxporId(@PathVariable("taxID") taxID: Long): Any {
+    fun findTaxbyId(@PathVariable("taxID") taxID: Long): Any {
         val response = HashMap<String, Any>()
         return try {
             val taxesList = iTaxesService!!.findTaxesByTaxesID(taxID)
